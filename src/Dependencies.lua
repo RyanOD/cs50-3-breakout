@@ -1,0 +1,7 @@
+push = require('lib.push')
+Class = require('lib.class')
+require('src.config')
+require('Paddle')
+require('src.states.BaseState')
+require('src.states.TitleState')
+require('src.StateMachine')
