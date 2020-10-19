@@ -1,18 +1,18 @@
-TitleState = Class{__includes = BaseState}
+StartState = Class{__includes = BaseState}
 
-function TitleState:init()
+function StartState:init()
 
 end
 
 
 
-function TitleState:update(dt)
+function StartState:update(dt)
   -- listen for keypressed
     -- if 'enter', change to serve state
     -- if 'space', change to highscore state
 end
 
-function TitleState:render()
+function StartState:render()
 -- title text
 love.graphics.setFont(gFonts['large'])
 love.graphics.printf('Breakout', 0, 100, VIRTUAL_WIDTH, 'center')
