@@ -1,22 +1,33 @@
 StartState = Class{__includes = BaseState}
 
-function StartState:init()
-
-end
-
-
+local highlighted = 1
 
 function StartState:update(dt)
-  -- listen for keypressed
-    -- if 'enter', change to serve state
-    -- if 'space', change to highscore state
+  if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
+    highlighted = highlighted == 1 and 2 or 1
+    gSounds['paddle-hit']:play()
+  end
+
+  if love.keyboard.wasPressed('escape') then
+    love.event.quit()
+  end
 end
 
 function StartState:render()
--- title text
-love.graphics.setFont(gFonts['large'])
-love.graphics.printf('Breakout', 0, 100, VIRTUAL_WIDTH, 'center')
+  -- title text
+  love.graphics.setFont(gFonts['large'])
+  love.graphics.printf('Breakout', 0, VIRTUAL_HEIGHT / 2 - 100, VIRTUAL_WIDTH, 'center')
+  love.graphics.setFont(gFonts['medium'])
 
--- instructions for starting game
--- title music
+  if highlighted == 1 then
+    love.graphics.setColor(184/255, 255/255, 73/255)
+  end
+  love.graphics.printf('Play Game', 0, VIRTUAL_HEIGHT / 2 + 20, VIRTUAL_WIDTH, 'center')
+
+  love.graphics.setColor(1, 1, 1)
+
+  if highlighted == 2 then
+    love.graphics.setColor(184/255, 255/255, 73/255)
+  end
+  love.graphics.printf('High Scores', 0, VIRTUAL_HEIGHT / 2 + 40, VIRTUAL_WIDTH, 'center')
 end
