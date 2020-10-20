@@ -6,8 +6,6 @@
 
 require('src.Dependencies')
 
-require('Paddle')
-
 function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
   love.window.setTitle('Breakout')
