@@ -7,6 +7,7 @@
 require('src.Dependencies')
 
 function love.load()
+  math.randomseed(os.time())
   love.graphics.setDefaultFilter('nearest', 'nearest')
   love.window.setTitle('Breakout')
 
@@ -46,8 +47,9 @@ function love.load()
   }
 
   gQuads = {
-    ['bricks'] = GenerateBrickQuads(gTextures['main'], 32, 16, 21),
-    ['paddles'] = GeneratePaddleQuads(gTextures['main'])
+    ['bricks'] = GenerateBrickQuads(gTextures['main']),
+    ['paddles'] = GeneratePaddleQuads(gTextures['main']),
+    ['balls'] = GenerateBallQuads(gTextures['main'])
   }
 
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {

@@ -1,11 +1,11 @@
 Paddle = Class{}
 
 function Paddle:init()
-  self.skin = 1
+  self.skin = math.random(1,4)
   self.size = 2
   self.width = self.size * 32
   self.height = 16
-  self.x = VIRTUAL_WIDTH / 2
+  self.x = VIRTUAL_WIDTH / 2 - self.width / 2
   self.y = VIRTUAL_HEIGHT - 50
   self.dx = PADDLE_SPEED
 end

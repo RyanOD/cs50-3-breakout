@@ -1,12 +1,15 @@
-function GenerateBrickQuads(atlas, tileWidth, tileHeight, total)
+function GenerateBrickQuads(atlas)
+  local tileWidth = 32
+  local tileHeight = 16
+  local totalTiles = 21
   local quadTable = {}
   local quadCounter = 1
   local horizCount = atlas:getWidth() / tileWidth
 
-  for y = 0, math.floor(total / horizCount) do
+  for y = 0, math.floor(totalTiles / horizCount) do
     for x = 0, (horizCount - 1) do
       quadTable[quadCounter] = love.graphics.newQuad(x * tileWidth, y * tileHeight, tileWidth, tileHeight, atlas:getDimensions())
-      if quadCounter == total then
+      if quadCounter == totalTiles then
         return quadTable
       end
       quadCounter = quadCounter + 1
@@ -32,4 +35,23 @@ function GeneratePaddleQuads(atlas)
   end
 
   return quadTable
+end
+
+function GenerateBallQuads(atlas)
+  local quadTable = {}
+  local quadCounter = 1
+  local x = 96
+  local y = 48
+  local width = 8
+  local height = 8
+
+  while quadCounter < 8 do
+    for i = 0, 1 do
+      for j = 0, 3 do
+        quadTable[quadCounter] = love.graphics.newQuad(x + j * width, y + i * 8, width, height, atlas:getDimensions())
+        quadCounter = quadCounter + 1
+      end
+    end
+    return quadTable
+  end
 end
