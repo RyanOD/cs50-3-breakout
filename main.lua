@@ -96,9 +96,6 @@ function love.update(dt)
       exit option.
   --]]
   function love.keypressed(key)
-    if key == 'escape' then
-      love.event.quit()
-    end
     love.keyboard.keysPressed[key] = true
   end
 end
