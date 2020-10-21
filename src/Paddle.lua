@@ -1,8 +1,9 @@
 Paddle = Class{}
 
 function Paddle:init()
-  self.image = gQuads['paddles'][11]
-  self.width = 64
+  self.skin = 4
+  self.size = 4
+  self.width = self.size * 32
   self.height = 16
   self.x = VIRTUAL_WIDTH / 2
   self.y = VIRTUAL_HEIGHT - 50
@@ -19,5 +20,5 @@ function Paddle:update(dt)
 end
 
 function Paddle:render()
-  love.graphics.draw(gTextures['main'], self.image, self.x, self.y)
+  love.graphics.draw(gTextures['main'], gQuads['paddles'][(self.skin * 4 + self.size) - 4], self.x, self.y)
 end

@@ -1,4 +1,4 @@
-function GenerateBricks(atlas, tileWidth, tileHeight, total)
+function GenerateBrickQuads(atlas, tileWidth, tileHeight, total)
   local quadTable = {}
   local quadCounter = 1
   local horizCount = atlas:getWidth() / tileWidth
@@ -14,9 +14,9 @@ function GenerateBricks(atlas, tileWidth, tileHeight, total)
   end
 end
 
-function GeneratePaddles(atlas)
+function GeneratePaddleQuads(atlas)
   local quadTable = {}
-  local quadCounter = 0
+  local quadCounter = 1
   local x = 0
   local y = 64
 
