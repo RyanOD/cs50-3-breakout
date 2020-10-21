@@ -1,9 +1,9 @@
 Paddle = Class{}
 
 function Paddle:init()
-  self.image = love.graphics.newImage('graphics/arrows.png')
-  self.width = self.image:getWidth()
-  self.height = self.image:getHeight()
+  self.image = gQuads['paddles'][11]
+  self.width = 64
+  self.height = 16
   self.x = VIRTUAL_WIDTH / 2
   self.y = VIRTUAL_HEIGHT - 50
   self.dx = PADDLE_SPEED
@@ -19,5 +19,5 @@ function Paddle:update(dt)
 end
 
 function Paddle:render()
-  love.graphics.draw(self.image, self.x, self.y)
+  love.graphics.draw(gTextures['main'], self.image, self.x, self.y)
 end
