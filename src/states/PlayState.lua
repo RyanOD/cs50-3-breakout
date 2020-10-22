@@ -3,6 +3,10 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
   self.paddle = Paddle()
   self.ball = Ball()
+  self.bricks = {}
+  for i = 0, 8 do
+    self.bricks[i] = Brick(i * 32, 20)
+  end
   self.paused = false
   self.live = false
 end
@@ -35,11 +39,15 @@ function PlayState:update(dt)
       self.ball.dx = -self.ball.dx
     end
   end
+
 end
 
 function PlayState:render()
   self.paddle:render()
   self.ball:render()
+  for k, brick in pairs(self.bricks) do
+    brick:render()
+  end
   if not self.paused then
     gSounds['music']:play()
   else
