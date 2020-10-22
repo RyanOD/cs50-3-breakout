@@ -4,8 +4,8 @@ function PlayState:init()
   self.paddle = Paddle()
   self.ball = Ball()
   self.bricks = {}
-  for i = 0, ROW_COUNT - 1 do
-    self.bricks[i] = Brick(i * 32, 30)
+  for i = 1, ROW_COUNT do
+    self.bricks[i] = Brick((i - 1) * 32, 30)
   end
   self.paused = false 
   self.live = false
@@ -40,14 +40,13 @@ function PlayState:update(dt)
     end
   end
 
-  for k, brick in pairs(self.bricks) do
+  for k, brick in ipairs(self.bricks) do
     if self.ball:collides(brick) then
-      if self.ball.x < brick.x or self.ball.x + self.ball.width > brick.x + brick.width then
+      if self.ball.x < brick.x and self.ball.dx > 0 or self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
         self.ball.dx = -self.ball.dx
       else
         self.ball.dy = -self.ball.dy
       end
-      --self.ball.dy = -self.ball.dy
       table.remove(self.bricks, k)
       gSounds['brick-hit-2']:play()
     end
@@ -66,5 +65,8 @@ function PlayState:render()
     gSounds['music']:pause()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('PAUSED', 0, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
+  end
+  for k, brick in pairs(self.bricks) do
+    love.graphics.print(table.getn(self.bricks))
   end
 end
