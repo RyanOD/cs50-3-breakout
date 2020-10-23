@@ -55,3 +55,20 @@ function GenerateBallQuads(atlas)
     return quadTable
   end
 end
+
+function GenerateHeartQuads(atlas)
+  local quadTable = {}
+  local quadCounter = 1
+  local x = 128
+  local y = 48
+  local width = 10
+  local height = 9
+
+  while quadCounter < 2 do
+    for i = 0, 1 do
+      quadTable[quadCounter] = love.graphics.newQuad(x + i * width, y, width, height, atlas:getDimensions())
+      quadCounter = quadCounter + 1
+    end
+    return quadTable
+  end
+end

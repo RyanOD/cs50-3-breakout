@@ -9,6 +9,7 @@ function PlayState:init()
   end
   self.paused = false 
   self.live = false
+  self.hearts = 3
 end
 
 function PlayState:update(dt)
@@ -35,20 +36,31 @@ function PlayState:update(dt)
     if self.ball.y > VIRTUAL_HEIGHT - 58 then
       self.ball.y = VIRTUAL_HEIGHT - 58
       self.ball.dy = -self.ball.dy
-    else
-      self.ball.dx = -self.ball.dx
+    end
+
+    if self.ball.dx > 0 and self.ball.x + 0.5 * self.ball.width > self.paddle.x + 0.75 * self.paddle.width or
+       self.ball.dx < 0 and self.ball.x + 0.5 * self.ball.width < self.paddle.x + 0.25 * self.paddle.width then
+      self.ball.dx = self.ball.dx * 1.3
     end
   end
 
   for k, brick in ipairs(self.bricks) do
     if self.ball:collides(brick) then
-      if self.ball.x < brick.x and self.ball.dx > 0 or self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
+      gSounds['brick-hit-2']:play()
+      if self.ball.x < brick.x and self.ball.dx > 0 then
+        self.ball.x = brick.x - self.ball.width
         self.ball.dx = -self.ball.dx
+      elseif self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
+        self.ball.x = brick.x + brick.width + self.ball.width
+        self.ball.dx = -self.ball.dx
+      elseif self.ball.y < brick.y then
+        self.ball.y = brick.y - 8
+        self.ball.dy = -self.ball.dy
       else
+        self.ball.y = brick.y + 16
         self.ball.dy = -self.ball.dy
       end
       table.remove(self.bricks, k)
-      gSounds['brick-hit-2']:play()
     end
   end
 end
@@ -59,6 +71,7 @@ function PlayState:render()
   for k, brick in pairs(self.bricks) do
     brick:render(k)
   end
+
   if not self.paused then
     gSounds['music']:play()
   else
@@ -66,7 +79,12 @@ function PlayState:render()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('PAUSED', 0, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
   end
+
   for k, brick in pairs(self.bricks) do
-    love.graphics.print(table.getn(self.bricks))
+    love.graphics.print(self.ball.dx)
+  end
+  
+  for i=0, self.hearts - 1 do
+    love.graphics.draw(gTextures['main'], gQuads['hearts'][1], 476 + i * 11, 5)
   end
 end
