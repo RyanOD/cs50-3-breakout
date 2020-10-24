@@ -13,6 +13,6 @@ function Brick:hit()
   self.inPlay = false
 end
 
-function Brick:render(k)
+function Brick:render()
   love.graphics.draw(gTextures['main'], gQuads['bricks'][1], self.x, self.y)
 end
