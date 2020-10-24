@@ -3,10 +3,7 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
   self.paddle = Paddle()
   self.ball = Ball()
-  self.bricks = Rows()
-  --for i = 1, ROW_COUNT do
-    --self.bricks[i] = Brick((i - 1) * 32, 30)
-  --end
+  self.bricks = Bricks()
   self.paused = false 
   self.live = false
   self.hearts = 3
@@ -67,7 +64,9 @@ end
 
 function PlayState:render()
   self.paddle:render()
+
   self.ball:render()
+
   for k, brickRow in pairs(self.bricks.row) do
     for j, brick in pairs(brickRow) do
       brick:render()

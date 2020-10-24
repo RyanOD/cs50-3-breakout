@@ -1,19 +1,33 @@
-Rows = Class{}
+Bricks = Class{}
 
 COLUMN_COUNTS = {7, 9, 11, 13}
 ROW_COUNTS = {3, 4, 5}
 
-function Rows:init()
-  self.row = {}
+function Bricks:init()
   self.numColumns = COLUMN_COUNTS[math.random(4)]
   self.numRows = ROW_COUNTS[math.random(3)]
-  for i=1, self.numRows do
-    self.row[i] = {}
-    for j=1, self.numColumns do
-      self.row[i][j] = Brick((j - 1) * 32, 30)
+  self.row = self:buildBrickField(self.numRows, self.numColumns, self.row)
+end
+
+function Bricks:buildBrickField(numRows, numColumns, row)
+  local row = self:insertTable()
+  for i=1, numRows do
+    row[i] = self:insertTable()
+    for j=1, numColumns do
+      row[i][j] = self:addBrick(i, j)
     end
   end
+  return row
 end
+
+function Bricks:insertTable()
+  return {}
+end
+
+function Bricks:addBrick(i, j)
+  return Brick(i, j, self.numColumns)
+end
+
 
 
 --[[
