@@ -1,11 +1,11 @@
 Brick = Class{}
 
-function Brick:init(i, j, numColumns)
+function Brick:init(i, j, numColumns, family)
   self.width = 32
   self.height = 16
+  self.color = family * 4 + math.random(4)
   self.x = (j - 1) * self.width + (VIRTUAL_WIDTH - numColumns * self.width) / 2
   self.y = 30 + i * self.height
-  self.gap = 2
 end
 
 function Brick:hit()
@@ -14,9 +14,8 @@ function Brick:hit()
 end
 
 function Brick:render()
-  love.graphics.draw(gTextures['main'], gQuads['bricks'][1], self.x, self.y)
+  love.graphics.draw(gTextures['main'], gQuads['bricks'][self.color], self.x, self.y)
 end
-
 
 --[[
 

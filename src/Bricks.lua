@@ -6,14 +6,16 @@ ROW_COUNTS = {3, 4, 5}
 function Bricks:init()
   self.numColumns = COLUMN_COUNTS[math.random(4)]
   self.numRows = ROW_COUNTS[math.random(3)]
-  self.row = self:buildBrickField(self.numRows, self.numColumns, self.row)
+  self.gaps = math.floor(math.random(2))
+  self.color = math.floor(math.random(5))
+  self.row = self:buildBrickField()
 end
 
-function Bricks:buildBrickField(numRows, numColumns, row)
+function Bricks:buildBrickField()
   local row = self:insertTable()
-  for i=1, numRows do
+  for i=1, self.numRows do
     row[i] = self:insertTable()
-    for j=1, numColumns do
+    for j=1, self.numColumns, self.gaps do
       row[i][j] = self:addBrick(i, j)
     end
   end
@@ -25,7 +27,7 @@ function Bricks:insertTable()
 end
 
 function Bricks:addBrick(i, j)
-  return Brick(i, j, self.numColumns)
+  return Brick(i, j, self.numColumns, self.color)
 end
 
 
