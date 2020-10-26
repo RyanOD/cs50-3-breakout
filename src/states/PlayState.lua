@@ -1,6 +1,6 @@
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
+function PlayState:enter()
   self.paddle = Paddle()
   self.ball = Ball()
   self.bricks = Bricks()
