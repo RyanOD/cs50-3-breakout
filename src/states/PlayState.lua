@@ -44,25 +44,28 @@ function PlayState:update(dt)
     end
   end
 
-  for k, brick in ipairs(self.bricks) do
-    if self.ball:collides(brick) then
-      gSounds['brick-hit-2']:play()
-      if self.ball.x < brick.x and self.ball.dx > 0 then
-        self.ball.x = brick.x - self.ball.width
-        self.ball.dx = -self.ball.dx
-      elseif self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
-        self.ball.x = brick.x + brick.width + self.ball.width
-        self.ball.dx = -self.ball.dx
-      elseif self.ball.y < brick.y then
-        self.ball.y = brick.y - 8
-        self.ball.dy = -self.ball.dy
-      else
-        self.ball.y = brick.y + 16
-        self.ball.dy = -self.ball.dy
+  for k, brickRow in ipairs(self.bricks.table) do
+    for j, brick in ipairs(brickRow) do
+      if self.ball:collides(brick) then
+        gSounds['brick-hit-2']:play()
+        if self.ball.x < brick.x and self.ball.dx > 0 then
+          self.ball.x = brick.x - self.ball.width
+          self.ball.dx = -self.ball.dx
+        elseif self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
+          self.ball.x = brick.x + brick.width + self.ball.width
+          self.ball.dx = -self.ball.dx
+        elseif self.ball.y < brick.y then
+          self.ball.y = brick.y - 8
+          self.ball.dy = -self.ball.dy
+        else
+          self.ball.y = brick.y + 16
+          self.ball.dy = -self.ball.dy
+        end
+        table.remove(self.bricks.table[k], j)
       end
-      table.remove(self.bricks, k)
     end
   end
+  collectgarbage("collect")
 end
 
 function PlayState:render()

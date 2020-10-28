@@ -16,16 +16,3 @@ end
 function Brick:render()
   love.graphics.draw(gTextures['main'], gQuads['bricks'][self.pattern], self.x, self.y)
 end
-
---[[
-
-playstate instantiates a BrickTable object
-
-BrickTable class is a table of tables each with each k, j position holding a Brick object
-
-
-PlayState() -- holds the main BrickTable object
- - BrickTable() -- builds the main BrickTable object by pulling in Brick() objects
-  - Brick -- creats the visual bricks on the screen
-
---]]
