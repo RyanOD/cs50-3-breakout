@@ -65,13 +65,17 @@ function PlayState:update(dt)
 
   if self.ball.y + self.ball.height > VIRTUAL_HEIGHT then
     self.lives.hearts = self.lives.hearts - 1
-    gStateMachine:change('serve', {
-      paddle = self.paddle,
-      ball = Ball(),
-      bricks = self.bricks,
-      score = 0,
-      lives = self.lives
-    })
+    if self.lives.hearts == 0 then
+      gStateMachine:change('gameover')
+    else
+      gStateMachine:change('serve', {
+        paddle = self.paddle,
+        ball = Ball(),
+        bricks = self.bricks,
+        score = 0,
+        lives = self.lives
+      })
+    end
   end
 
   collectgarbage('collect')
