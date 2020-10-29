@@ -1,18 +1,19 @@
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
-  self.paddle = Paddle()
-  self.ball = Ball()
-  self.bricks = BrickTable()
-  --for i = 1, ROW_COUNT do
-    --self.bricks[i] = Brick((i - 1) * 32, 30)
-  --end
+function PlayState:enter(params)
+  self.paddle = params.paddle
+  self.ball = params.ball
+  self.bricks = params.bricks
   self.paused = false 
   self.live = false
-  self.hearts = 3
+  self.hearts = params.hearts
+  self.score = params.score
+  self.lives = params.lives
 end
 
 function PlayState:update(dt)
+  self.ball.moving = true
+
   if love.keyboard.wasPressed('space') then
     gSounds['pause']:play()
     self.paused = not self.paused
@@ -25,10 +26,6 @@ function PlayState:update(dt)
 
   if love.keyboard.wasPressed('escape') then
     love.event.quit()
-  end
-
-  if love.keyboard.wasPressed('return') then
-    self.ball.moving = true
   end
 
   if self.ball:collides(self.paddle) then
@@ -65,12 +62,25 @@ function PlayState:update(dt)
       end
     end
   end
-  collectgarbage("collect")
+
+  if self.ball.y + self.ball.height > VIRTUAL_HEIGHT then
+    self.lives.hearts = self.lives.hearts - 1
+    gStateMachine:change('serve', {
+      paddle = self.paddle,
+      ball = Ball(),
+      bricks = self.bricks,
+      score = 0,
+      lives = self.lives
+    })
+  end
+
+  collectgarbage('collect')
 end
 
 function PlayState:render()
   self.paddle:render()
   self.ball:render()
+  self.lives:render()
 
   for k, brickRow in pairs(self.bricks.table) do
     for j, brick in pairs(brickRow) do
@@ -90,7 +100,4 @@ function PlayState:render()
     love.graphics.print(self.ball.dx)
   end
   
-  for i=0, self.hearts - 1 do
-    love.graphics.draw(gTextures['main'], gQuads['hearts'][1], 476 + i * 11, 5)
-  end
 end

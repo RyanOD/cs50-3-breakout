@@ -14,7 +14,13 @@ function StartState:update(dt)
 
   if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
     if highlighted == 1 then
-      gStateMachine:change('play')
+      gStateMachine:change('serve', {
+        paddle = Paddle(),
+        ball = Ball(),
+        bricks = BrickTable(),
+        score = 0,
+        lives = Lives()
+      })
     elseif highlighted == 2 then
       gStateMachine:change('highscore')
     end

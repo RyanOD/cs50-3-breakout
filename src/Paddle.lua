@@ -11,7 +11,6 @@ function Paddle:init()
 end
 
 function Paddle:update(dt)
-  --listen for left/right key and move paddle
   if love.keyboard.isDown('left') and self.x > 0 then
     self.x = self.x - self.dx * dt
   elseif love.keyboard.isDown('right') and self.x < VIRTUAL_WIDTH - self.width then
@@ -21,4 +20,8 @@ end
 
 function Paddle:render()
   love.graphics.draw(gTextures['main'], gQuads['paddles'][(self.skin * 4 + self.size) - 4], self.x, self.y)
+end
+
+function Paddle:reset()
+  self.x = VIRTUAL_WIDTH / 2 - self.width / 2
 end

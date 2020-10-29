@@ -49,3 +49,7 @@ function Ball:collides(target)
 
   return true
 end
+
+function Ball:reset()
+  self.x = VIRTUAL_WIDTH / 2 - self.width / 2
+end

@@ -1,1 +1,0 @@
-LaunchState = Class{__includes = BaseState}
