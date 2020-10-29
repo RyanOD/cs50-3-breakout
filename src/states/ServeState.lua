@@ -30,6 +30,7 @@ end
 function ServeState:render()
   self.paddle:render()
   self.ball:render()
+  self.lives:render()
 
   for k, brickRow in pairs(self.bricks.table) do
     for j, brick in pairs(brickRow) do

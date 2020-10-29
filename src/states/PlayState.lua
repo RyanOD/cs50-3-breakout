@@ -6,7 +6,6 @@ function PlayState:enter(params)
   self.bricks = params.bricks
   self.paused = false 
   self.live = false
-  self.hearts = params.hearts
   self.score = params.score
   self.lives = params.lives
 end
@@ -64,8 +63,14 @@ function PlayState:update(dt)
   end
 
   if self.ball.y + self.ball.height > VIRTUAL_HEIGHT then
-    self.lives.hearts = self.lives.hearts - 1
-    if self.lives.hearts == 0 then
+    for i, heart in ipairs(self.lives.hearts) do
+      if heart then
+        self.lives.hearts[i] = false
+        break
+      end
+    end
+
+    if not self.lives.hearts[3] then
       gStateMachine:change('gameover')
     else
       gStateMachine:change('serve', {

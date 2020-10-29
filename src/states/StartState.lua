@@ -36,12 +36,12 @@ function StartState:render()
   if highlighted == 1 then
     love.graphics.setColor(184/255, 255/255, 73/255)
   end
-  love.graphics.printf('Play Game', 0, VIRTUAL_HEIGHT / 2 + 20, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf('Play Game', 0, VIRTUAL_HEIGHT / 2 + 60, VIRTUAL_WIDTH, 'center')
 
   love.graphics.setColor(1, 1, 1)
 
   if highlighted == 2 then
     love.graphics.setColor(184/255, 255/255, 73/255)
   end
-  love.graphics.printf('High Scores', 0, VIRTUAL_HEIGHT / 2 + 40, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf('High Scores', 0, VIRTUAL_HEIGHT / 2 + 80, VIRTUAL_WIDTH, 'center')
 end
