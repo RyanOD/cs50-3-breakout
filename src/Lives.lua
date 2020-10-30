@@ -5,15 +5,18 @@ function Lives:init()
   self.height = 9
   self.x = 468
   self.y = 5
-  self.hearts = {true, true, true}
+  self.hearts = TOTAL_LIVES
 end
 
 function Lives:render()
-  for i, heart in pairs(self.hearts) do
-    if heart then
-      love.graphics.draw(gTextures['main'], gQuads['hearts'][1], self.x + i * self.width, self.y)
-    else
-      love.graphics.draw(gTextures['main'], gQuads['hearts'][2], self.x + i * self.width, self.y)
-    end
+  local x = self.x
+
+  for i = 1, self.hearts do
+    love.graphics.draw(gTextures['main'], gQuads['hearts'][1], self.x + i * self.width, self.y)
+    x = x + self.width
+  end
+
+  for i = 1, 3 - self.hearts do
+    love.graphics.draw(gTextures['main'], gQuads['hearts'][2], x + i * self.width, self.y)
   end
 end

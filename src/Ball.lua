@@ -1,9 +1,8 @@
 Ball = Class{}
 
 function Ball:init()
-  self.width = 8
-  self.height = 8
-  self.x = VIRTUAL_WIDTH / 2 - self.width / 2
+  self.diameter = 8
+  self.x = VIRTUAL_WIDTH / 2 - self.diameter / 2
   self.y = VIRTUAL_HEIGHT - 59
   self.skin = math.random(1, 7)
   self.moving = false
@@ -41,9 +40,9 @@ function Ball:render()
 end
 
 function Ball:collides(target)
-  if self.x + self.width < target.x or self.x > target.x + target.width then
+  if self.y + self.diameter < target.y or self.y > target.y + target.height then
     return false
-  elseif self.y + self.height < target.y or self.y > target.y + target.height then
+  elseif self.x + self.diameter < target.x or self.x > target.x + target.width then
     return false
   end
 
@@ -51,5 +50,5 @@ function Ball:collides(target)
 end
 
 function Ball:reset()
-  self.x = VIRTUAL_WIDTH / 2 - self.width / 2
+  self.x = VIRTUAL_WIDTH / 2 - self.diameter / 2
 end

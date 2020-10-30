@@ -29,13 +29,19 @@ function PlayState:update(dt)
 
   if self.ball:collides(self.paddle) then
     gSounds['paddle-hit']:play()
-    if self.ball.y > VIRTUAL_HEIGHT - 58 then
+    if self.ball.y + 0.5 * self.ball.diameter > self.paddle.y and self.ball.y + 0.5 * self.ball.diameter < self.paddle.y + self.paddle.height then
+      self.ball.dx = -self.ball.dx
+    else
+    --[[
+      if self.ball.y + 0.5 * self.ball.> VIRTUAL_HEIGHT - 58 then
       self.ball.y = VIRTUAL_HEIGHT - 58
+    --]]
       self.ball.dy = -self.ball.dy
+    --end
     end
-
-    if self.ball.dx > 0 and self.ball.x + 0.5 * self.ball.width > self.paddle.x + 0.75 * self.paddle.width or
-       self.ball.dx < 0 and self.ball.x + 0.5 * self.ball.width < self.paddle.x + 0.25 * self.paddle.width then
+    
+    if self.ball.dx > 0 and self.ball.x + 0.5 * self.ball.diameter > self.paddle.x + 0.75 * self.paddle.width or
+       self.ball.dx < 0 and self.ball.x + 0.5 * self.ball.diameter < self.paddle.x + 0.25 * self.paddle.width then
       self.ball.dx = self.ball.dx * 1.3
     end
   end
@@ -45,11 +51,12 @@ function PlayState:update(dt)
       if self.ball:collides(brick) then
         self.score = self.score + 5
         gSounds['brick-hit-2']:play()
+        --[[
         if self.ball.x < brick.x and self.ball.dx > 0 then
-          self.ball.x = brick.x - self.ball.width
+          self.ball.x = brick.x - self.ball.diameter
           self.ball.dx = -self.ball.dx
-        elseif self.ball.x + self.ball.width > brick.x + brick.width and self.ball.dx > 0 then
-          self.ball.x = brick.x + brick.width + self.ball.width
+        elseif self.ball.x + self.ball.diameter > brick.x + brick.width and self.ball.dx > 0 then
+          self.ball.x = brick.x + brick.width + self.ball.diameter
           self.ball.dx = -self.ball.dx
         elseif self.ball.y < brick.y then
           self.ball.y = brick.y - 8
@@ -58,20 +65,17 @@ function PlayState:update(dt)
           self.ball.y = brick.y + 16
           self.ball.dy = -self.ball.dy
         end
+        --]]
         table.remove(self.bricks.table[k], j)
       end
     end
   end
 
-  if self.ball.y + self.ball.height > VIRTUAL_HEIGHT then
-    for i, heart in ipairs(self.lives.hearts) do
-      if heart then
-        self.lives.hearts[i] = false
-        break
-      end
-    end
+  if self.ball.y + self.ball.diameter > VIRTUAL_HEIGHT then
+    gSounds['hurt']:play()
+    self.lives.hearts = self.lives.hearts - 1
 
-    if not self.lives.hearts[3] then
+    if self.lives.hearts == 0 then
       gStateMachine:change('gameover', {
         score = self.score
       })
@@ -111,5 +115,4 @@ function PlayState:render()
   for k, brick in pairs(self.bricks) do
     love.graphics.print(self.ball.dx)
   end
-  
 end
