@@ -7,6 +7,7 @@ function ServeState:enter(params)
   self.ball = params.ball
   self.ball:reset()
   self.lives = params.lives
+  self.score = params.score
 end
 
 function ServeState:update(dt)
@@ -22,7 +23,8 @@ function ServeState:update(dt)
       paddle = self.paddle,
       bricks = self.bricks,
       ball = self.ball,
-      lives = self.lives
+      lives = self.lives,
+      score = self.score
     })
   end
 end

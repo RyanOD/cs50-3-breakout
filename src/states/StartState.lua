@@ -18,8 +18,8 @@ function StartState:update(dt)
         paddle = Paddle(),
         ball = Ball(),
         bricks = BrickTable(),
-        score = 0,
-        lives = Lives()
+        lives = Lives(),
+        score = 0
       })
     elseif highlighted == 2 then
       gStateMachine:change('highscore')

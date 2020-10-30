@@ -43,6 +43,7 @@ function PlayState:update(dt)
   for k, brickRow in ipairs(self.bricks.table) do
     for j, brick in ipairs(brickRow) do
       if self.ball:collides(brick) then
+        self.score = self.score + 5
         gSounds['brick-hit-2']:play()
         if self.ball.x < brick.x and self.ball.dx > 0 then
           self.ball.x = brick.x - self.ball.width
@@ -71,14 +72,16 @@ function PlayState:update(dt)
     end
 
     if not self.lives.hearts[3] then
-      gStateMachine:change('gameover')
+      gStateMachine:change('gameover', {
+        score = self.score
+      })
     else
       gStateMachine:change('serve', {
         paddle = self.paddle,
         ball = Ball(),
         bricks = self.bricks,
-        score = 0,
-        lives = self.lives
+        lives = self.lives,
+        score = self.score
       })
     end
   end
