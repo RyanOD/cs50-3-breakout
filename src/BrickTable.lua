@@ -15,13 +15,10 @@ function BrickTable:buildTable()
   local colors = {self:selectColor(), self:selectColor()}
   for i=1, self.numRows do
     table[i] = {}
-    local skip = math.random(1, 2)
-    local colorFlag = 1
-    for j=1, self.numColumns, 1 do
-      if colorFlag then
-        table[i][j] = Brick(i, j, self.numColumns, colors[colorFlag] + self.pattern)
-        colorFlag = 3 - colorFlag
-      end
+    local colorFlag = math.random(1, 2)
+    for j=1, self.numColumns do
+      table[i][j] = Brick(i, j, self.numColumns, colors[colorFlag] + self.pattern)
+      colorFlag = 3 - colorFlag
     end
   end
   return table
