@@ -29,20 +29,21 @@ function PlayState:update(dt)
 
   if self.ball:collides(self.paddle) then
     gSounds['paddle-hit']:play()
-    if self.ball.y + 0.5 * self.ball.diameter > self.paddle.y and self.ball.y + 0.5 * self.ball.diameter < self.paddle.y + self.paddle.height then
-      self.ball.dx = -self.ball.dx
+    if self.ball.y + 0.5 * self.ball.diameter > self.paddle.y then
+      if self.ball.x + 0.5 * self.ball.diameter < self.paddle.x + 0.5 * self.paddle.width then
+        self.ball.x = self.paddle.x - self.ball.diameter
+        if self.ball.dx > 0 then
+          self.ball.dx = -self.ball.dx
+        end
+      elseif self.ball.x + 0.5 * self.ball.diameter > self.paddle.x + 0.5 * self.paddle.width then
+        self.ball.x = self.paddle.x + self.paddle.width
+        if self.ball.dx < 0 then-- ball traveling left
+          self.ball.dx = -self.ball.dx
+        end
+      end
     else
-    --[[
-      if self.ball.y + 0.5 * self.ball.> VIRTUAL_HEIGHT - 58 then
-      self.ball.y = VIRTUAL_HEIGHT - 58
-    --]]
+      self.ball.y = self.paddle.y - self.ball.diameter
       self.ball.dy = -self.ball.dy
-    --end
-    end
-    
-    if self.ball.dx > 0 and self.ball.x + 0.5 * self.ball.diameter > self.paddle.x + 0.75 * self.paddle.width or
-       self.ball.dx < 0 and self.ball.x + 0.5 * self.ball.diameter < self.paddle.x + 0.25 * self.paddle.width then
-      self.ball.dx = self.ball.dx * 1.3
     end
   end
 
@@ -51,7 +52,7 @@ function PlayState:update(dt)
       if self.ball:collides(brick) then
         self.score = self.score + 5
         gSounds['brick-hit-2']:play()
-        --[[
+
         if self.ball.x < brick.x and self.ball.dx > 0 then
           self.ball.x = brick.x - self.ball.diameter
           self.ball.dx = -self.ball.dx
@@ -65,7 +66,7 @@ function PlayState:update(dt)
           self.ball.y = brick.y + 16
           self.ball.dy = -self.ball.dy
         end
-        --]]
+
         table.remove(self.bricks.table[k], j)
       end
     end
@@ -112,7 +113,5 @@ function PlayState:render()
     love.graphics.printf('PAUSED', 0, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
   end
 
-  for k, brick in pairs(self.bricks) do
-    love.graphics.print(self.ball.dx)
-  end
+  displayScore(self.score)
 end

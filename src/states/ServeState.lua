@@ -42,4 +42,6 @@ function ServeState:render()
 
   love.graphics.setFont(gFonts['medium'])
   love.graphics.printf('Press enter to start play', 0, VIRTUAL_HEIGHT / 2 + 20, VIRTUAL_WIDTH, 'center')
+
+  displayScore(self.score)
 end

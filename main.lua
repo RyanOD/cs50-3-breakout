@@ -126,3 +126,8 @@ end
 function love.render()
   love.graphics.printf('Breakout', 0, 100, VIRTUAL_WIDTH, 'center')
 end
+
+function displayScore(score)
+  love.graphics.setFont(gFonts['small'])
+  love.graphics.printf('Score = ' .. score, 5, 5, VIRTUAL_WIDTH, 'left')
+end
