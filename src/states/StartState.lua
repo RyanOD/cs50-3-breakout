@@ -17,7 +17,7 @@ function StartState:update(dt)
       gStateMachine:change('serve', {
         paddle = Paddle(),
         ball = Ball(),
-        bricks = BrickTable(),
+        bricks = BrickTable:createMap(), --this doesn't need to be so complex...call a function that builds table of bricks.
         lives = Lives(),
         score = 0
       })

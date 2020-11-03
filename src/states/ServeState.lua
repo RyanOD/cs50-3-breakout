@@ -34,10 +34,8 @@ function ServeState:render()
   self.ball:render()
   self.lives:render()
 
-  for k, brickRow in pairs(self.bricks.table) do
-    for j, brick in pairs(brickRow) do
-      brick:render()
-    end
+  for k, brick in pairs(self.bricks) do
+    brick:render()
   end
 
   love.graphics.setFont(gFonts['medium'])

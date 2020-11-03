@@ -47,28 +47,26 @@ function PlayState:update(dt)
     end
   end
 
-  for k, brickRow in ipairs(self.bricks.table) do
-    for j, brick in ipairs(brickRow) do
-      if self.ball:collides(brick) then
-        self.score = self.score + 5
-        gSounds['brick-hit-2']:play()
+  for k, brick in ipairs(self.bricks) do
+    if self.ball:collides(brick) then
+      self.score = self.score + 5
+      gSounds['brick-hit-2']:play()
 
-        if self.ball.x < brick.x and self.ball.dx > 0 then
-          self.ball.x = brick.x - self.ball.diameter
-          self.ball.dx = -self.ball.dx
-        elseif self.ball.x + self.ball.diameter > brick.x + brick.width and self.ball.dx > 0 then
-          self.ball.x = brick.x + brick.width + self.ball.diameter
-          self.ball.dx = -self.ball.dx
-        elseif self.ball.y < brick.y then
-          self.ball.y = brick.y - 8
-          self.ball.dy = -self.ball.dy
-        else
-          self.ball.y = brick.y + 16
-          self.ball.dy = -self.ball.dy
-        end
-
-        table.remove(self.bricks.table[k], j)
+      if self.ball.x < brick.x and self.ball.dx > 0 then
+        self.ball.x = brick.x - self.ball.diameter
+        self.ball.dx = -self.ball.dx
+      elseif self.ball.x + self.ball.diameter > brick.x + brick.width and self.ball.dx > 0 then
+        self.ball.x = brick.x + brick.width + self.ball.diameter
+        self.ball.dx = -self.ball.dx
+      elseif self.ball.y < brick.y then
+        self.ball.y = brick.y - 8
+        self.ball.dy = -self.ball.dy
+      else
+        self.ball.y = brick.y + 16
+        self.ball.dy = -self.ball.dy
       end
+
+      table.remove(self.bricks, k)
     end
   end
 
@@ -99,10 +97,8 @@ function PlayState:render()
   self.ball:render()
   self.lives:render()
 
-  for k, brickRow in pairs(self.bricks.table) do
-    for j, brick in pairs(brickRow) do
-      brick:render()
-    end
+  for k, brick in pairs(self.bricks) do
+    brick:render()
   end
 
   if not self.paused then
