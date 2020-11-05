@@ -1,7 +1,10 @@
 BrickTable = Class{}
 
-function BrickTable:createMap()
+function BrickTable:createMap(level)
   local bricks = {}
+
+  local highestColor = math.min(level % 5 + 3, 5)
+  local highestTier = math.min(math.floor(level % 5), 3)
 
   local numRows = math.random(3, 5)
   local numCols = math.random(7, 13)
@@ -13,11 +16,11 @@ function BrickTable:createMap()
   local skip = math.random(1, 2) == 1 and true or false
   local skipFlag = math.random(1, 2) == 1 and true or false
 
-  local color1 = math.random(1, 5)
-  local color2 = math.random(1, 5)
+  local color1 = math.random(1, highestColor)
+  local color2 = math.random(1, highestColor)
 
-  local tier1 = math.random(1, 4)
-  local tier2 = math.random(1, 4)
+  local tier1 = math.random(1, highestTier)
+  local tier2 = math.random(1, highestTier)
 
   for row=1, numRows do
     for col=1, numCols do
@@ -28,6 +31,7 @@ function BrickTable:createMap()
         skipFlag = not skipFlag
       end
       
+      -- create Brick instance
       b = Brick(numCols, col, row)
 
       if alternating and alternatingFlag then

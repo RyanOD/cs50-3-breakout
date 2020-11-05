@@ -8,6 +8,7 @@ function ServeState:enter(params)
   self.ball:reset()
   self.lives = params.lives
   self.score = params.score
+  self.level = params.level
 end
 
 function ServeState:update(dt)
@@ -21,8 +22,9 @@ function ServeState:update(dt)
   if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
     gStateMachine:change('play', {
       paddle = self.paddle,
-      bricks = self.bricks,
       ball = self.ball,
+      level = self.level,
+      bricks = self.bricks,
       lives = self.lives,
       score = self.score
     })

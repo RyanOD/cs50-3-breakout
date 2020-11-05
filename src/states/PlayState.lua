@@ -8,6 +8,7 @@ function PlayState:enter(params)
   self.live = false
   self.score = params.score
   self.lives = params.lives
+  self.level = params.level
 end
 
 function PlayState:update(dt)
@@ -48,25 +49,38 @@ function PlayState:update(dt)
   end
 
   for k, brick in ipairs(self.bricks) do
-    if self.ball:collides(brick) then
-      self.score = self.score + 5
-      gSounds['brick-hit-2']:play()
+    if brick.inPlay then
+      if self.ball:collides(brick) then
+        self.score = self.score + 5
+        gSounds['brick-hit-2']:play()
 
-      if self.ball.x < brick.x and self.ball.dx > 0 then
-        self.ball.x = brick.x - self.ball.diameter
-        self.ball.dx = -self.ball.dx
-      elseif self.ball.x + self.ball.diameter > brick.x + brick.width and self.ball.dx > 0 then
-        self.ball.x = brick.x + brick.width + self.ball.diameter
-        self.ball.dx = -self.ball.dx
-      elseif self.ball.y < brick.y then
-        self.ball.y = brick.y - 8
-        self.ball.dy = -self.ball.dy
-      else
-        self.ball.y = brick.y + 16
-        self.ball.dy = -self.ball.dy
+        if self.ball.x < brick.x and self.ball.dx > 0 then
+          self.ball.x = brick.x - self.ball.diameter
+          self.ball.dx = -self.ball.dx
+        elseif self.ball.x + self.ball.diameter > brick.x + brick.width and self.ball.dx > 0 then
+          self.ball.x = brick.x + brick.width + self.ball.diameter
+          self.ball.dx = -self.ball.dx
+        elseif self.ball.y < brick.y then
+          self.ball.y = brick.y - 8
+          self.ball.dy = -self.ball.dy
+        else
+          self.ball.y = brick.y + 16
+          self.ball.dy = -self.ball.dy
+        end
+        brick:hit()
       end
+    end
 
-      table.remove(self.bricks, k)
+    if table.getn(self.bricks) == 0 then
+      --self.level = self.level + 1
+      gStateMachine:change('serve', {
+        paddle = self.paddle,
+        ball = Ball(),
+        bricks = self.bricks,
+        lives = self.lives,
+        score = self.score,
+        level = self.level 
+      })
     end
   end
 

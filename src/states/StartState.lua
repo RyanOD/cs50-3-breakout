@@ -17,9 +17,10 @@ function StartState:update(dt)
       gStateMachine:change('serve', {
         paddle = Paddle(),
         ball = Ball(),
-        bricks = BrickTable:createMap(), --this doesn't need to be so complex...call a function that builds table of bricks.
+        bricks = BrickTable:createMap(1), --this doesn't need to be so complex...call a function that builds table of bricks.
         lives = Lives(),
-        score = 0
+        score = 0,
+        level = 1
       })
     elseif highlighted == 2 then
       gStateMachine:change('highscore')
