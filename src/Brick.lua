@@ -1,13 +1,13 @@
 Brick = Class{}
 
-function Brick:init(numCols, col, row)
+function Brick:init(numCols, col, row, color, tier)
   self.width = 32
   self.height = 16
   self.x = (VIRTUAL_WIDTH - numCols * self.width) / 2 + (col - 1) * self.width
   self.y = row * self.height
-  self.color = 0
-  self.tier = 1
   self.inPlay = true
+  self.color = color
+  self.tier = tier
 end
 
 function Brick:hit()

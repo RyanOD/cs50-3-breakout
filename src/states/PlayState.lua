@@ -12,6 +12,8 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
+  local level = self.level
+
   self.ball.moving = true
 
   if love.keyboard.wasPressed('space') then
@@ -71,15 +73,11 @@ function PlayState:update(dt)
       end
     end
 
-    if table.getn(self.bricks) == 0 then
-      --self.level = self.level + 1
-      gStateMachine:change('serve', {
-        paddle = self.paddle,
-        ball = Ball(),
-        bricks = self.bricks,
+    if checkVictory(self.bricks) then
+      gStateMachine:change('victory', {
+        level = self.level,
         lives = self.lives,
-        score = self.score,
-        level = self.level 
+        score = self.score
       })
     end
   end
@@ -124,4 +122,13 @@ function PlayState:render()
   end
 
   displayScore(self.score)
+end
+
+function checkVictory(bricks)
+  for k, brick in pairs(bricks) do
+    if brick.inPlay then
+      return false
+    end
+  end
+  return true
 end

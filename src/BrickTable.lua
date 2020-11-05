@@ -22,6 +22,8 @@ function BrickTable:createMap(level)
   local tier1 = math.random(1, highestTier)
   local tier2 = math.random(1, highestTier)
 
+  local color, tier
+
   for row=1, numRows do
     for col=1, numCols do
       if skip and skipFlag then
@@ -32,22 +34,22 @@ function BrickTable:createMap(level)
       end
       
       -- create Brick instance
-      b = Brick(numCols, col, row)
+      --b = Brick(numCols, col, row)
 
       if alternating and alternatingFlag then
-        b.color = color1
-        b.tier = tier1
+        color = color1
+        tier = tier1
         alternatingFlag = not alternatingFlag
       elseif alternating and not alternatingFlag then
-        b.color = color2
-        b.tier = tier2
+        color = color2
+        tier = tier2
         alternatingFlag = not alternatingFlag
       else
-        b.color = color1
-        b.tier = tier1
+        color = color1
+        tier = tier1
       end
 
-      table.insert(bricks, b)
+      table.insert(bricks, Brick(numCols, col, row, color, tier))
       ::continue::
     end
   end
