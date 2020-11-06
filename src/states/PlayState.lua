@@ -51,6 +51,7 @@ function PlayState:update(dt)
   end
 
   for k, brick in ipairs(self.bricks) do
+    brick:update(dt)
     if brick.inPlay then
       if self.ball:collides(brick) then
         self.score = self.score + 5
@@ -111,6 +112,7 @@ function PlayState:render()
 
   for k, brick in pairs(self.bricks) do
     brick:render()
+    brick:renderParticles()
   end
 
   if not self.paused then

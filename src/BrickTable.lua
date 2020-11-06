@@ -32,9 +32,6 @@ function BrickTable:createMap(level)
       else
         skipFlag = not skipFlag
       end
-      
-      -- create Brick instance
-      --b = Brick(numCols, col, row)
 
       if alternating and alternatingFlag then
         color = color1
