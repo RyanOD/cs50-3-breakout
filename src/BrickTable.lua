@@ -14,7 +14,7 @@ function BrickTable:createMap(level)
   local alternatingFlag = math.random(1, 2) == 1 and true or false
 
   local skip = math.random(1, 2) == 1 and true or false
-  local skipFlag = math.random(1, 2) == 1 and true or false
+  local skipFlag = skip and true or false
 
   local color1 = math.random(1, highestColor)
   local color2 = math.random(1, highestColor)
@@ -24,8 +24,8 @@ function BrickTable:createMap(level)
 
   local color, tier
 
-  for row=1, numRows do
-    for col=1, numCols do
+  for row=1, 1 do
+    for col=1, 1 do
       if skip and skipFlag then
         skipFlag = not skipFlag
         goto continue

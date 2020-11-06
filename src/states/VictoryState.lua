@@ -1,9 +1,9 @@
 VictoryState = Class{__includes = BaseState}
 
 function VictoryState:enter(params)
-  self.level = params.level
-  self.score = params.score
   self.lives = params.lives
+  self.score = params.score
+  self.level = params.level
 end
 
 function VictoryState:update(dt)
@@ -14,14 +14,13 @@ function VictoryState:update(dt)
   end
 
   if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-    self.level = self.level + 1
     gStateMachine:change('serve', {
       paddle = Paddle(),
       ball = Ball(),
       bricks = BrickTable:createMap(self.level),
       lives = Lives(),
       score = 0,
-      level = self.level
+      level = self.level + 1
     })
   end
 end

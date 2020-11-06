@@ -12,8 +12,6 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-  local level = self.level
-
   self.ball.moving = true
 
   if love.keyboard.wasPressed('space') then
@@ -97,7 +95,8 @@ function PlayState:update(dt)
         ball = Ball(),
         bricks = self.bricks,
         lives = self.lives,
-        score = self.score
+        score = self.score,
+        level = self.level
       })
     end
   end
