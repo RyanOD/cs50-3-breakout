@@ -24,8 +24,8 @@ function BrickTable:createMap(level)
 
   local color, tier
 
-  for row=1, 1 do
-    for col=1, 1 do
+  for row=1, numRows do
+    for col=1, numCols do
       if skip and skipFlag then
         skipFlag = not skipFlag
         goto continue

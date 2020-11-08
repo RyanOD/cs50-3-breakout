@@ -2,6 +2,10 @@ StartState = Class{__includes = BaseState}
 
 local highlighted = 1
 
+function StartState:enter(params)
+  self.highScores = params.highScores
+end
+
 function StartState:update(dt)
   if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
     highlighted = highlighted == 1 and 2 or 1
@@ -23,7 +27,9 @@ function StartState:update(dt)
         level = 1
       })
     elseif highlighted == 2 then
-      gStateMachine:change('highscore')
+      gStateMachine:change('highscore', {
+        highScores = self.highScores
+      })
     end
   end
 end
@@ -37,12 +43,12 @@ function StartState:render()
   if highlighted == 1 then
     love.graphics.setColor(184/255, 255/255, 73/255)
   end
-  love.graphics.printf('Play Game', 0, VIRTUAL_HEIGHT / 2 + 60, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf('START', 0, VIRTUAL_HEIGHT / 2 + 60, VIRTUAL_WIDTH, 'center')
 
   love.graphics.setColor(1, 1, 1)
 
   if highlighted == 2 then
     love.graphics.setColor(184/255, 255/255, 73/255)
   end
-  love.graphics.printf('High Scores', 0, VIRTUAL_HEIGHT / 2 + 80, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf('HIGH SCORES', 0, VIRTUAL_HEIGHT / 2 + 80, VIRTUAL_WIDTH, 'center')
 end

@@ -68,7 +68,9 @@ function love.load()
     ['victory'] = function() return VictoryState() end,
     ['gameover'] = function() return GameoverState() end
   }
-  gStateMachine:change('start')
+  gStateMachine:change('start', {
+    highScores = loadHighScores()
+  })
 
   --[[
       We create a table here to store any keys pressed during game play. We do this because LOVE's default behavior
@@ -131,4 +133,40 @@ end
 function displayScore(score)
   love.graphics.setFont(gFonts['small'])
   love.graphics.printf('Score = ' .. score, 5, 5, VIRTUAL_WIDTH, 'left')
+end
+
+function loadHighScores()
+  love.filesystem.setIdentity('breakout')
+  if not love.filesystem.exists('breakout.lst') then
+    local scores = ''
+    for i = 10, 1, -1 do
+      scores = scores .. 'ROD\n'
+      scores = scores .. tostring(i * 100) .. '\n'
+    end
+    love.filesystem.write('breakout.lst', scores)
+  end
+
+  local nameFlag = true
+  local currentName = nil
+  local counter = 1
+
+  local scores = {}
+  for i = 1, 10 do
+    scores[i] = {
+      name = nil,
+      score = nil
+    }
+  end
+
+  for line in love.filesystem.lines('breakout.lst') do
+    if nameFlag then
+      scores[counter].name = string.sub(line, 1, 3)
+    else
+      scores[counter].score = tonumber(line)
+      counter = counter + 1
+    end
+    nameFlag = not nameFlag
+  end
+
+  return scores
 end

@@ -17,7 +17,7 @@ function VictoryState:update(dt)
     gStateMachine:change('serve', {
       paddle = Paddle(),
       ball = Ball(),
-      bricks = BrickTable:createMap(self.level),
+      bricks = BrickTable:createMap(self.level + 1),
       lives = Lives(),
       score = 0,
       level = self.level + 1
