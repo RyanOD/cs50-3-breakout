@@ -7,10 +7,6 @@ function HighscoreState:enter(params)
 end
 
 function HighscoreState:update(dt)
-  if love.keyboard.wasPressed('escape') then
-    love.event.quit()
-  end
-
   if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
     highlighted = highlighted == 1 and 2 or 1
     gSounds['paddle-hit']:play()
@@ -27,7 +23,9 @@ function HighscoreState:update(dt)
         level = 1
       })
     elseif highlighted == 2 then
-      gStateMachine:change('start')
+      gStateMachine:change('start', {
+        highScores = self.highScores
+      })
     end
   end
 end

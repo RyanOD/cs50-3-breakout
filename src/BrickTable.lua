@@ -9,12 +9,19 @@ function BrickTable:createMap(level)
   local numRows = math.random(3, 5)
   local numCols = math.random(7, 13)
   numCols = numCols % 2 == 0 and (numCols + 1) or numCols
-
+  
   local alternating = math.random(1, 2) == 1 and true or false
   local alternatingFlag = math.random(1, 2) == 1 and true or false
 
   local skip = math.random(1, 2) == 1 and true or false
   local skipFlag = skip and true or false
+
+  if TESTING then
+    numRows = 1
+    numCols = 1
+    alternating = false
+    skip = false
+  end
 
   local color1 = math.random(1, highestColor)
   local color2 = math.random(1, highestColor)

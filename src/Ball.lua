@@ -2,12 +2,16 @@ Ball = Class{}
 
 function Ball:init()
   self.diameter = 8
+  self.radius = self.diameter / 2
   self.x = VIRTUAL_WIDTH / 2 - self.diameter / 2
   self.y = VIRTUAL_HEIGHT - 59
   self.skin = math.random(1, 7)
   self.moving = false
-  self.dx = math.random(-280, 280)
-  self.dy = 150
+  self.dx = (math.random(1, 2) == 1 and 1 or -1) * math.random(90, 180)
+  if TESTING then
+    self.dx = 0
+  end
+  self.dy = 200
 end
 
 function Ball:update(dt)

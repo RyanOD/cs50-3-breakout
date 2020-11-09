@@ -66,7 +66,8 @@ function love.load()
     ['highscore'] = function() return HighscoreState() end,
     ['score'] = function() return ScoreState() end,
     ['victory'] = function() return VictoryState() end,
-    ['gameover'] = function() return GameoverState() end
+    ['gameover'] = function() return GameoverState() end,
+    ['enterhighscore'] = function() return EnterHighScoreState() end
   }
   gStateMachine:change('start', {
     highScores = loadHighScores()
@@ -90,6 +91,10 @@ end
     consistent across different platforms.
 --]]
 function love.update(dt)
+  if love.keyboard.wasPressed('escape') then
+    love.event.quit()
+  end
+  
   gStateMachine:update(dt)
 
   love.keyboard.keysPressed = {}

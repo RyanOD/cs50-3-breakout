@@ -9,13 +9,10 @@ function ServeState:enter(params)
   self.lives = params.lives
   self.score = params.score
   self.level = params.level
+  self.highScores = params.highScores
 end
 
 function ServeState:update(dt)
-  if love.keyboard.wasPressed('escape') then
-    love.event.quit()
-  end
-
   self.paddle:update(dt)
   self.ball.x = self.paddle.x + 0.5 * self.paddle.width - 0.5 * self.ball.diameter
 
@@ -26,7 +23,8 @@ function ServeState:update(dt)
       level = self.level,
       bricks = self.bricks,
       lives = self.lives,
-      score = self.score
+      score = self.score,
+      highScores = self.highScores
     })
   end
 end

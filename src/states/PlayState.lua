@@ -9,6 +9,7 @@ function PlayState:enter(params)
   self.score = params.score
   self.lives = params.lives
   self.level = params.level
+  self.highScores = params.highScores
 end
 
 function PlayState:update(dt)
@@ -24,21 +25,22 @@ function PlayState:update(dt)
     self.ball:update(dt)
   end
 
-  if love.keyboard.wasPressed('escape') then
-    love.event.quit()
-  end
-
   if self.ball:collides(self.paddle) then
     gSounds['paddle-hit']:play()
-    if self.ball.y + 0.5 * self.ball.diameter > self.paddle.y then
-      if self.ball.x + 0.5 * self.ball.diameter < self.paddle.x + 0.5 * self.paddle.width then
+    if self.ball.y + self.ball.diameter <= self.paddle.y then
+      if self.paddle.movingLeft and self.ball.dx < 0 or self.paddle.movingRight and self.ball.dx > 0 then
+        self.ball.dx = self.ball.dx * 1.3
+      end
+    end
+    if self.ball.y + self.ball.radius > self.paddle.y then
+      if self.ball.x + self.ball.radius < self.paddle.x + 0.5 * self.paddle.width then
         self.ball.x = self.paddle.x - self.ball.diameter
         if self.ball.dx > 0 then
           self.ball.dx = -self.ball.dx
         end
-      elseif self.ball.x + 0.5 * self.ball.diameter > self.paddle.x + 0.5 * self.paddle.width then
+      elseif self.ball.x + self.ball.radius > self.paddle.x + 0.5 * self.paddle.width then
         self.ball.x = self.paddle.x + self.paddle.width
-        if self.ball.dx < 0 then-- ball traveling left
+        if self.ball.dx < 0 then
           self.ball.dx = -self.ball.dx
         end
       end
@@ -52,7 +54,7 @@ function PlayState:update(dt)
     brick:update(dt)
     if brick.inPlay then
       if self.ball:collides(brick) then
-        self.score = self.score + 5
+        self.score = self.score + 10000
         gSounds['brick-hit-2']:play()
 
         if self.ball.x < brick.x and self.ball.dx > 0 then
@@ -85,10 +87,25 @@ function PlayState:update(dt)
     gSounds['hurt']:play()
     self.lives.hearts = self.lives.hearts - 1
 
+    local scoreNum = 11
+
     if self.lives.hearts == 0 then
-      gStateMachine:change('gameover', {
+      for i = 10, 1, -1 do
+        if self.score > self.highScores[i].score then
+          scoreNum = i
+        end
+      end
+    
+      if scoreNum < 11 then
+        gStateMachine:change('enterhighscore', {
+        scoreNum = scoreNum,
+        highScores = self.highScores
+      })
+      else
+        gStateMachine:change('gameover', {
         score = self.score
       })
+      end
     else
       gStateMachine:change('serve', {
         paddle = self.paddle,
@@ -96,12 +113,11 @@ function PlayState:update(dt)
         bricks = self.bricks,
         lives = self.lives,
         score = self.score,
-        level = self.level
+        level = self.level,
+        highScores = self.highScores
       })
     end
   end
-
-  collectgarbage('collect')
 end
 
 function PlayState:render()

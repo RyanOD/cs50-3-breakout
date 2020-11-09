@@ -12,10 +12,6 @@ function StartState:update(dt)
     gSounds['paddle-hit']:play()
   end
 
-  if love.keyboard.wasPressed('escape') then
-    love.event.quit()
-  end
-
   if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
     if highlighted == 1 then
       gStateMachine:change('serve', {
@@ -24,7 +20,8 @@ function StartState:update(dt)
         bricks = BrickTable:createMap(1), --this doesn't need to be so complex...call a function that builds table of bricks.
         lives = Lives(),
         score = 0,
-        level = 1
+        level = 1,
+        highScores = self.highScores
       })
     elseif highlighted == 2 then
       gStateMachine:change('highscore', {
