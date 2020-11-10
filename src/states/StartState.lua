@@ -32,7 +32,6 @@ function StartState:update(dt)
 end
 
 function StartState:render()
-  -- title text
   love.graphics.setFont(gFonts['large'])
   love.graphics.printf('Breakout', 0, VIRTUAL_HEIGHT / 2 - 100, VIRTUAL_WIDTH, 'center')
   love.graphics.setFont(gFonts['medium'])
@@ -47,5 +46,6 @@ function StartState:render()
   if highlighted == 2 then
     love.graphics.setColor(184/255, 255/255, 73/255)
   end
+  
   love.graphics.printf('HIGH SCORES', 0, VIRTUAL_HEIGHT / 2 + 80, VIRTUAL_WIDTH, 'center')
 end

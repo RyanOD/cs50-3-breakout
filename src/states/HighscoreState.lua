@@ -20,7 +20,8 @@ function HighscoreState:update(dt)
         bricks = BrickTable:createMap(1), --this doesn't need to be so complex...call a function that builds table of bricks.
         lives = Lives(),
         score = 0,
-        level = 1
+        level = 1,
+        highScores = self.highScores
       })
     elseif highlighted == 2 then
       gStateMachine:change('start', {

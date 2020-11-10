@@ -4,6 +4,7 @@ function VictoryState:enter(params)
   self.lives = params.lives
   self.score = params.score
   self.level = params.level
+  self.highScores = params.highScores
 end
 
 function VictoryState:update(dt)
@@ -16,7 +17,8 @@ function VictoryState:update(dt)
       bricks = BrickTable:createMap(self.level + 1),
       lives = self.lives,
       score = self.score,
-      level = self.level + 1
+      level = self.level + 1,
+      highScores = self.highScores
     })
   end
 end

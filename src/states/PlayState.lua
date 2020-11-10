@@ -78,7 +78,8 @@ function PlayState:update(dt)
       gStateMachine:change('victory', {
         level = self.level,
         lives = self.lives,
-        score = self.score
+        score = self.score,
+        highScores = self.highScores
       })
     end
   end
