@@ -59,9 +59,9 @@ function Brick:hit()
     paletteColors[self.color].b / 255,
     0
   )
-
+  self.inPlay = false
   self.psystem:emit(64)
-
+--[[
   if self.tier > 0 then
     if self.color == 1 then
         self.tier = self.tier - 1
@@ -77,6 +77,7 @@ function Brick:hit()
         self.color = self.color - 1
     end
   end
+--]]
 end
 
 function Brick:update(dt)

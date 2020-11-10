@@ -91,7 +91,7 @@ function PlayState:update(dt)
 
     if self.lives.hearts == 0 then
       for i = 10, 1, -1 do
-        if self.score > self.highScores[i].score then
+        if self.score > tonumber(self.highScores[i].score) then
           scoreNum = i
         end
       end
@@ -103,7 +103,8 @@ function PlayState:update(dt)
       })
       else
         gStateMachine:change('gameover', {
-        score = self.score
+        score = self.score,
+        highScores = self.highScores
       })
       end
     else
@@ -130,9 +131,9 @@ function PlayState:render()
     brick:renderParticles()
   end
 
-  if not self.paused then
+  if not self.paused and not TESTING then
     gSounds['music']:play()
-  else
+  elseif not TESTING then
     gSounds['music']:pause()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('PAUSED', 0, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')

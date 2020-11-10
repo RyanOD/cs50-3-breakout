@@ -14,8 +14,8 @@ function VictoryState:update(dt)
       paddle = Paddle(),
       ball = Ball(),
       bricks = BrickTable:createMap(self.level + 1),
-      lives = Lives(),
-      score = 0,
+      lives = self.lives,
+      score = self.score,
       level = self.level + 1
     })
   end
